@@ -4,31 +4,37 @@
 
 
 int main(){
-    int n;
-    scanf("%d",n);
+    int n = 3;
+    scanf("%d",&n);
+
     int a[n][n];
-    int sum[n*2+2];
-    int *arr = &a[0][0],*s=sum;
-    memset(sum,0,sizeof(sum));
-
-
     for(int i=0;i<n;i++)
         for(int j=0;j<n;j++)
             scanf("%d",&a[i][j]);
-    
+
+    int aucLen = (n*2)+2;
+    int aucArray[aucLen];   //Accumulator Array [0....n-1, n....n*2-1, n*2, n*2+1]
+        //let K be any number from [0..n-1]
+        // 0....n-1 -> kth Row Sum at kth positon
+        // n....n*2-1 -> kth Column Sum at (n+k)th position
+        // n*2 -> Main Diagnol Sum
+        // n*2+1 -> Anti-Diagnol Sum
+    memset(aucArray,0,sizeof(aucArray));
+
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
-            printf("%d ",a[i][j]);
-            sum[i]+=a[i][j];
-            sum[i+n]+=a[i][j];
+            aucArray[i] += a[i][j]; //i th Row Sum
+            aucArray[n+j] += a[i][j]; //j th Column Sum
         }
-        printf("\n");
-        sum[(n*2+2)-2]+=a[i][i];
-        sum[(n*2+2)-1]+=a[i][n-1-i];
+        aucArray[aucLen-2] +=a [i][i]; //Main diagonal Sum
+        aucArray[aucLen-1] +=a [i][n-1-i]; //Anti - Diagonal Sum
     }
 
-    for(int i=0;i<(n*2)+2;i++) 
-        printf("%d\n",sum[i]);
-    return 0;
+    short int check = aucLen-1;
+    while(aucArray[check]==aucArray[0] && --check>0){
+        continue;
+    }; //Chech every element is same
 
+    printf("%s",check==0 ? "Magic Matrix" : "Not A Magic Matrix") ;
+    return 0;
 }
