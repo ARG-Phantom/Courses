@@ -15,8 +15,8 @@ int main(){
     int aucLen = (n*2)+2;
     int aucArray[aucLen];   //Accumulator Array [0....n-1, n....n*2-1, n*2, n*2+1]
         //let K be any number from [0..n-1]
-        // 0....n-1 -> kth Row Sum at kth positon
-        // n....n*2-1 -> kth Column Sum at (n+k)th position
+        // 0....n-1 -> kth Row Sum,Stored at kth positon
+        // n....n*2-1 -> kth Column,Stored at Sum at (n+k)th position
         // n*2 -> Main Diagnol Sum
         // n*2+1 -> Anti-Diagnol Sum
     memset(aucArray,0,sizeof(aucArray));
@@ -31,9 +31,7 @@ int main(){
     }
 
     short int check = aucLen-1;
-    while(aucArray[check]==aucArray[0] && --check>0){
-        continue;
-    }; //Chech every element is same
+    while(aucArray[check]==aucArray[0] && --check>0); //Chech every element is same
 
     printf("%s",check==0 ? "Magic Matrix" : "Not A Magic Matrix") ;
     return 0;
